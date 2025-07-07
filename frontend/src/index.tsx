@@ -1,2 +1,7 @@
-console.log("Hello")
-console.log("Hello")
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import "./index.css";
+
+createRoot(document.getElementById("root")!).render(
+    <App /> as React.ReactNode
+);
