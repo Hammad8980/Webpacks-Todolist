@@ -8,9 +8,11 @@ module.exports = {
         test: /\.tsx$/,
         use: "ts-loader",
         include: [path.resolve(__dirname, "src")],
+        exclude: /node_modules/,
       },
     ],
   },
+  devtools: "inline-source-map",
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
