@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  devtool: "inline-source-map",
   entry: "./src/index.tsx",
   mode: "development",
   module: {
@@ -14,7 +15,7 @@ module.exports = {
       },
       {
         test: /\.css$/, 
-        use: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader", "postcss-loader"], 
       },
     ],
   },
@@ -23,7 +24,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html", // or create one
+      template: "./public/index.html",
       title: "Todo List App",
     }),
   ],
@@ -35,7 +36,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, "dist"),
     },
-    port: 8081,
+    port: 8080,
     liveReload: true,
     hot: true,
   },
