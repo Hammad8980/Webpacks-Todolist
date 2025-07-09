@@ -10,7 +10,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Modal Animations and CSS */
+/* Modal Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;

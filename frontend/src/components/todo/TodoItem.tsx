@@ -3,6 +3,14 @@ import type { PropsWithChildren } from 'react';
 import type { Task } from '../../features/todos/TodoTaskTypes';
 import Button from '../ui/Button';
 
+type DeletePhase =
+  | 'idle'
+  | 'expanding'
+  | 'spreading'
+  | 'transforming'
+  | 'fading'
+  | 'complete';
+
 type TodoItemProps = PropsWithChildren<{
   task: Task;
   onDelete: (id: number) => void;
@@ -19,7 +27,7 @@ export default function TodoItem({
 }: TodoItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(task.title);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [deletePhase, setDeletePhase] = useState<DeletePhase>('idle');
 
   const handleSave = () => {
     if (editTitle.trim() !== '') {
@@ -34,84 +42,118 @@ export default function TodoItem({
   };
 
   const handleDelete = () => {
-    setIsDeleting(true);
-    // Wait for animation to complete before actually deleting
+    if (deletePhase !== 'idle') return;
+
+    setDeletePhase('expanding');
+
+    // Phase 1: Expand red background (0.3s)
     setTimeout(() => {
+      setDeletePhase('spreading');
+    }, 300);
+
+    // Phase 2: Continue expanding and start icon transformation (0.2s)
+    setTimeout(() => {
+      setDeletePhase('transforming');
+    }, 500);
+
+    // Phase 3: Show checkmark and prepare for fade (0.3s)
+    setTimeout(() => {
+      setDeletePhase('fading');
+    }, 800);
+
+    // Phase 4: Complete fade out and remove (0.4s)
+    setTimeout(() => {
+      setDeletePhase('complete');
       onDelete(task.id);
-    }, 400); // Match the animation duration
+    }, 1200);
   };
 
   return (
     <>
       <div
-        className={`flex items-center gap-3 p-4 bg-gray-700 hover:bg-gray-650 rounded-xl border border-gray-600 transition-all duration-200 shadow-sm hover:shadow-md ${
-          isDeleting ? 'animate-slideOut' : ''
+        className={`relative flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md overflow-hidden ${
+          deletePhase === 'fading'
+            ? 'animate-fadeOut'
+            : deletePhase === 'idle'
+              ? 'bg-gray-700 hover:bg-gray-650 border-gray-600'
+              : 'bg-gray-700 border-gray-600'
         }`}
       >
-        <input
-          type="checkbox"
-          checked={task.isCompleted}
-          onChange={() => onToggle(task.id)}
-          className="h-5 w-5 text-blue-500 bg-gray-600 border-gray-500 rounded focus:ring-blue-400 focus:ring-2"
-          disabled={isDeleting}
+        {/* Red expanding background */}
+        <div
+          className={`absolute inset-0 bg-red-600 transition-all duration-500 ease-out ${
+            deletePhase === 'expanding'
+              ? 'scale-x-50 opacity-80'
+              : deletePhase === 'spreading'
+                ? 'scale-x-100 opacity-90'
+                : deletePhase === 'transforming' || deletePhase === 'fading'
+                  ? 'scale-100 opacity-95'
+                  : 'scale-x-0 opacity-0'
+          }`}
+          style={{
+            transformOrigin: 'right center',
+            borderRadius: 'inherit',
+          }}
         />
-        <span
-          className={`flex-grow text-lg ${task.isCompleted ? 'line-through text-gray-400' : 'text-gray-200'} transition-colors duration-200`}
-        >
-          {task.title}
-        </span>
-        <div className="flex gap-2">
-          <Button
-            onClick={() => setIsEditing(true)}
-            disabled={isDeleting}
-            className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+
+        {/* Content layer */}
+        <div className="relative z-10 flex items-center gap-3 w-full">
+          <input
+            type="checkbox"
+            checked={task.isCompleted}
+            onChange={() => onToggle(task.id)}
+            className="h-5 w-5 text-blue-500 bg-gray-600 border-gray-500 rounded focus:ring-blue-400 focus:ring-2"
+            disabled={deletePhase !== 'idle'}
+          />
+          <span
+            className={`flex-grow text-lg transition-colors duration-200 text-justify break-all ${
+              task.isCompleted ? 'line-through text-gray-400' : 'text-gray-200'
+            } ${deletePhase !== 'idle' ? 'text-white' : ''}`}
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            {task.title}
+          </span>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setIsEditing(true)}
+              disabled={deletePhase !== 'idle'}
+              className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-              />
-            </svg>
-          </Button>
-          <Button
-            onClick={handleDelete}
-            disabled={isDeleting}
-            className={`text-white p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:cursor-not-allowed ${
-              isDeleting
-                ? 'bg-red-700 animate-pulse'
-                : 'bg-red-600 hover:bg-red-700'
-            }`}
-          >
-            {isDeleting ? (
-              <svg
-                className="w-4 h-4 animate-spin"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-            ) : (
               <svg
                 className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
+              </svg>
+            </Button>
+
+            {/* Advanced Delete Button */}
+            <Button
+              onClick={handleDelete}
+              disabled={deletePhase !== 'idle'}
+              className={`relative p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:cursor-not-allowed overflow-hidden ${
+                deletePhase === 'expanding' ||
+                deletePhase === 'spreading' ||
+                deletePhase === 'transforming'
+                  ? 'bg-red-700 scale-110'
+                  : deletePhase === 'idle'
+                    ? 'bg-red-600 hover:bg-red-700 text-white'
+                    : 'bg-red-600 text-white'
+              }`}
+            >
+              {/* Trash Icon */}
+              <svg
+                className={`w-4 h-4 transition-all duration-300 ${
+                  deletePhase === 'transforming' || deletePhase === 'fading'
+                    ? 'opacity-0 scale-0 rotate-180'
+                    : 'opacity-100 scale-100 rotate-0'
+                }`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -123,8 +165,29 @@ export default function TodoItem({
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                 />
               </svg>
-            )}
-          </Button>
+
+              {/* Checkmark Icon */}
+              <svg
+                className={`absolute inset-0 m-auto w-4 h-4 text-white transition-all duration-300 ${
+                  deletePhase === 'transforming'
+                    ? 'opacity-100 scale-110 animate-bounce'
+                    : deletePhase === 'fading'
+                      ? 'opacity-100 scale-100'
+                      : 'opacity-0 scale-0'
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </Button>
+          </div>
         </div>
         {children}
       </div>
