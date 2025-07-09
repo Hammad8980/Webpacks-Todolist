@@ -3,17 +3,39 @@ import TodoList from '../../components/todo/TodoList';
 import { useTodos } from './hooks/useTodos';
 
 export default function TodosSection() {
-  const { todos, isLoading, onAddTask, onDeleteTask, onToggleTask } = useTodos();
+  const {
+    todos,
+    isLoading,
+    onAddTask,
+    onDeleteTask,
+    onToggleTask,
+    onUpdateTask,
+  } = useTodos();
 
   return (
     <div>
       <TodoInput onAddTask={onAddTask} />
-      <h2 className="text-lg font-bold mt-8 mb-4">Your list: </h2>
+      <h2 className="text-xl font-bold mt-8 mb-6 text-gray-200 flex items-center gap-2">
+        <svg
+          className="w-6 h-6 text-blue-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+          />
+        </svg>
+        Your Tasks
+      </h2>
       {isLoading && (
-        <div className='flex justify-center' role="status">
+        <div className="flex justify-center py-8" role="status">
           <svg
             aria-hidden="true"
-            className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            className="w-10 h-10 text-gray-600 animate-spin fill-blue-500"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +51,12 @@ export default function TodosSection() {
           </svg>
         </div>
       )}
-      <TodoList tasks={todos} onDelete={onDeleteTask} onToggle={onToggleTask} />
+      <TodoList
+        tasks={todos}
+        onDelete={onDeleteTask}
+        onToggle={onToggleTask}
+        onUpdate={onUpdateTask}
+      />
     </div>
   );
 }

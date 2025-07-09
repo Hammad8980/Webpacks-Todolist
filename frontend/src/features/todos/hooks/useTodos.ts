@@ -42,11 +42,18 @@ export function useTodos() {
     dispatch({ type: 'TOGGLE_TASK', payload: id });
   };
 
+  const onUpdateTask = (id: number, title: string) => {
+    if (title.trim() !== '') {
+      dispatch({ type: 'UPDATE_TASK', payload: { id, title } });
+    }
+  }
+
   return {
     todos,
     isLoading,
     onAddTask,
     onDeleteTask,
     onToggleTask,
+    onUpdateTask,
   };
 }
