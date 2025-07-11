@@ -1,56 +1,85 @@
-import { useReducer, useEffect, useState } from 'react';
-import { type Task } from '../TodoTaskTypes';
-import { saveToStorage, loadFromStorage } from '../../../utils/Storage';
-import { todoReducer  } from '../TodoReducer';
+import { useReducer, useEffect } from 'react';
+import { todoReducer, TodoState } from '../TodoReducer';
+import { todoAPI, handleAPIError } from '../../../services/Api';
 
-const STORAGE_KEY = 'Todo-App-Tasks';
+const initialState: TodoState = {
+  todos: [],
+  isLoading: true,
+  error: null,
+};
 
 export function useTodos() {
-  const [todos, dispatch] = useReducer(todoReducer, []);
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const fetch = setTimeout(() => {
-      const storedTodos = loadFromStorage<Task[]>(STORAGE_KEY, []);
-      dispatch({ type: 'SET_TASK', payload: storedTodos });
-      console.log('Saving todos...');
-      setIsLoading(false);
-    }, 1500);
-    return () => clearTimeout(fetch);
-  },[]);
+  const [state, dispatch] = useReducer(todoReducer, initialState);
 
+  // Load todos from API on mount
   useEffect(() => {
-    if (!isLoading) {
+    const loadTodos = async () => {
       try {
-        saveToStorage(STORAGE_KEY, todos);
-        console.log('Todos: ', todos);
+        dispatch({ type: 'SET_LOADING', payload: true });
+        const todos = await todoAPI.getTasks();
+        dispatch({ type: 'SET_TASKS', payload: todos });
       } catch (error) {
-        console.log(error);
+        dispatch({ type: 'SET_ERROR', payload: handleAPIError(error) });
+      } finally {
+        dispatch({ type: 'SET_LOADING', payload: false });
       }
-    }
-  }, [todos, isLoading]);
+    };
 
-  const onAddTask = (title: string) => {
-    if (title.trim() !== '') {
-      dispatch({ type: 'ADD_TASK', payload: title });
+    loadTodos();
+  }, []);
+
+  const onAddTask = async (title: string) => {
+    if (title.trim() === '') return;
+
+    try {
+      dispatch({ type: 'SET_ERROR', payload: null });
+      const newTask = await todoAPI.createTask({
+        title: title.trim(),
+        isCompleted: false,
+        priority: 'p2',
+      });
+      dispatch({ type: 'ADD_TASK', payload: newTask });
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: handleAPIError(error) });
     }
   };
-  const onDeleteTask = (id: number) => {
-    dispatch({ type: 'DELETE_TASK', payload: id });
-  };
 
-  const onToggleTask = (id: number) => {
-    dispatch({ type: 'TOGGLE_TASK', payload: id });
-  };
-
-  const onUpdateTask = (id: number, title: string) => {
-    if (title.trim() !== '') {
-      dispatch({ type: 'UPDATE_TASK', payload: { id, title } });
+  const onDeleteTask = async (id: number) => {
+    try {
+      dispatch({ type: 'SET_ERROR', payload: null });
+      await todoAPI.deleteTask(id);
+      dispatch({ type: 'DELETE_TASK', payload: id });
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: handleAPIError(error) });
     }
-  }
+  };
+
+  const onToggleTask = async (id: number) => {
+    try {
+      dispatch({ type: 'SET_ERROR', payload: null });
+      const updatedTask = await todoAPI.toggleTask(id);
+      dispatch({ type: 'TOGGLE_TASK', payload: updatedTask });
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: handleAPIError(error) });
+    }
+  };
+
+  const onUpdateTask = async (id: number, title: string) => {
+    if (title.trim() === '') return;
+
+    try {
+      dispatch({ type: 'SET_ERROR', payload: null });
+      const updatedTask = await todoAPI.updateTask(id, { title: title.trim() });
+      dispatch({ type: 'UPDATE_TASK', payload: updatedTask });
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: handleAPIError(error) });
+    }
+  };
 
   return {
-    todos,
-    isLoading,
+    todos: state.todos,
+    isLoading: state.isLoading,
+    error: state.error,
     onAddTask,
     onDeleteTask,
     onToggleTask,
