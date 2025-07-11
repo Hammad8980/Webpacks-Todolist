@@ -3,7 +3,10 @@ import { Task } from '../features/todos/TodoTaskTypes';
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL:
+    process.env.NODE_ENV === 'production'
+      ? 'https://your-backend-domain.com/api'
+      : 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
