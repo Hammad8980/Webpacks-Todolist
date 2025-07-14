@@ -11,7 +11,6 @@ RUN npm ci --only=production
 
 # Copy built application
 COPY dist/ ./dist/
-COPY .env.production ./.env
 
 EXPOSE 5000
 
