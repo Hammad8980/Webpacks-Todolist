@@ -8,7 +8,7 @@ export default function TodosSection() {
 
   return (
     <div>
-      <TodoInput onAddTask={onAddTask} />
+      <TodoInput tasks={todos} onAddTask={onAddTask}/>
       <h2 className="text-xl font-bold mt-8 mb-6 text-gray-200 flex items-center gap-2">
         <svg
           className="w-6 h-6 text-blue-400"
