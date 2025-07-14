@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`TodoList renders tasks when provided 1`] = `
+<div>
+  <div
+    class="space-y-3"
+  >
+    <div
+      data-testid="todo-item-1"
+    >
+      Task 1
+    </div>
+    <div
+      data-testid="todo-item-2"
+    >
+      Task 2
+    </div>
+    <div
+      data-testid="todo-item-3"
+    >
+      Task 3
+    </div>
+  </div>
+</div>
+`;
+
+exports[`TodoList shows empty state when no tasks are provided 1`] = `
+<div>
+  <div
+    class="text-center py-12"
+  >
+    <div
+      class="mb-4"
+    >
+      <svg
+        class="w-16 h-16 text-gray-600 mx-auto"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+        />
+      </svg>
+    </div>
+    <p
+      class="text-gray-400 text-lg"
+    >
+      No tasks yet!
+    </p>
+    <p
+      class="text-gray-500 text-sm mt-1"
+    >
+      Add your first task above to get started.
+    </p>
+  </div>
+</div>
+`;

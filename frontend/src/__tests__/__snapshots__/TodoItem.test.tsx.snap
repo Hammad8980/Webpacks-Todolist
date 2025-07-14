@@ -1,0 +1,279 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`TodoItem opens edit modal when edit button is clicked 1`] = `
+<div>
+  <div
+    class="relative flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md overflow-hidden bg-gray-700 hover:bg-gray-650 border-gray-600"
+  >
+    <div
+      class="absolute inset-0 bg-red-600 transition-all duration-500 ease-out scale-x-0 opacity-0"
+      style="transform-origin: right center; border-radius: inherit;"
+    />
+    <div
+      class="relative z-10 flex items-center gap-3 w-full"
+    >
+      <input
+        class="h-5 w-5 text-blue-500 bg-gray-600 border-gray-500 rounded focus:ring-blue-400 focus:ring-2"
+        type="checkbox"
+      />
+      <span
+        class="flex-grow text-lg transition-colors duration-200 text-justify break-all text-gray-200 "
+      >
+        Test task
+      </span>
+      <div
+        class="flex gap-2"
+      >
+        <button
+          class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+        </button>
+        <button
+          class="relative p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:cursor-not-allowed overflow-hidden bg-red-600 hover:bg-red-700 text-white"
+        >
+          <svg
+            class="w-4 h-4 transition-all duration-300 opacity-100 scale-100 rotate-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+          <svg
+            class="absolute inset-0 m-auto w-4 h-4 text-white transition-all duration-300 opacity-0 scale-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M5 13l4 4L19 7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="3"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn rounded-xl !mt-[0]"
+  >
+    <div
+      class="bg-gray-800 border border-gray-600 rounded-xl p-6 w-full max-w-md mx-4 shadow-2xl animate-slideIn"
+    >
+      <h3
+        class="text-xl font-semibold mb-6 text-gray-200 flex items-center gap-2"
+      >
+        <svg
+          class="w-5 h-5 text-blue-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          />
+        </svg>
+        Edit Task
+      </h3>
+      <input
+        class="w-full p-4 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none mb-6 transition-all duration-200"
+        placeholder="Enter task title..."
+        type="text"
+        value="Test task"
+      />
+      <div
+        class="flex gap-3 justify-end"
+      >
+        <button
+          class="px-6 py-3 text-gray-300 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded-lg transition-all duration-200"
+        >
+          Cancel
+        </button>
+        <button
+          class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`TodoItem renders task title and controls 1`] = `
+<div>
+  <div
+    class="relative flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md overflow-hidden bg-gray-700 hover:bg-gray-650 border-gray-600"
+  >
+    <div
+      class="absolute inset-0 bg-red-600 transition-all duration-500 ease-out scale-x-0 opacity-0"
+      style="transform-origin: right center; border-radius: inherit;"
+    />
+    <div
+      class="relative z-10 flex items-center gap-3 w-full"
+    >
+      <input
+        class="h-5 w-5 text-blue-500 bg-gray-600 border-gray-500 rounded focus:ring-blue-400 focus:ring-2"
+        type="checkbox"
+      />
+      <span
+        class="flex-grow text-lg transition-colors duration-200 text-justify break-all text-gray-200 "
+      >
+        Test task
+      </span>
+      <div
+        class="flex gap-2"
+      >
+        <button
+          class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+        </button>
+        <button
+          class="relative p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:cursor-not-allowed overflow-hidden bg-red-600 hover:bg-red-700 text-white"
+        >
+          <svg
+            class="w-4 h-4 transition-all duration-300 opacity-100 scale-100 rotate-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+          <svg
+            class="absolute inset-0 m-auto w-4 h-4 text-white transition-all duration-300 opacity-0 scale-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M5 13l4 4L19 7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="3"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`TodoItem shows completed task with line-through style 1`] = `
+<div>
+  <div
+    class="relative flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md overflow-hidden bg-gray-700 hover:bg-gray-650 border-gray-600"
+  >
+    <div
+      class="absolute inset-0 bg-red-600 transition-all duration-500 ease-out scale-x-0 opacity-0"
+      style="transform-origin: right center; border-radius: inherit;"
+    />
+    <div
+      class="relative z-10 flex items-center gap-3 w-full"
+    >
+      <input
+        checked=""
+        class="h-5 w-5 text-blue-500 bg-gray-600 border-gray-500 rounded focus:ring-blue-400 focus:ring-2"
+        type="checkbox"
+      />
+      <span
+        class="flex-grow text-lg transition-colors duration-200 text-justify break-all line-through text-gray-400 "
+      >
+        Test task
+      </span>
+      <div
+        class="flex gap-2"
+      >
+        <button
+          class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+        </button>
+        <button
+          class="relative p-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:cursor-not-allowed overflow-hidden bg-red-600 hover:bg-red-700 text-white"
+        >
+          <svg
+            class="w-4 h-4 transition-all duration-300 opacity-100 scale-100 rotate-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+          <svg
+            class="absolute inset-0 m-auto w-4 h-4 text-white transition-all duration-300 opacity-0 scale-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M5 13l4 4L19 7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="3"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
