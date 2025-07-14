@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 // API routes
 app.use("/api", apiRoutes);
 
-// Error handling middleware (must be last)
+// Error handling middleware
 app.use(notFound);
 app.use(errorHandler);
 
