@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/Db";
 import apiRoutes from "./routes/Api";
 import { errorHandler, notFound } from "./middleware/errorHandler";
+import { setupSwagger } from "./config/swagger";
 
 // Load environment variables
 dotenv.config();
@@ -19,10 +20,29 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+// Setup Swagger Documentation
+setupSwagger(app);
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Get API information
+ *     description: Returns basic information about the Todo List API and available endpoints
+ *     tags: [Info]
+ *     responses:
+ *       200:
+ *         description: API information retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
+ */
 // Root route
 app.get("/", (req, res) => {
   res.json({
     message: "Todo List API is running!",
+    documentation: "/api-docs",
     endpoints: {
       getTasks: "GET /api/tasks",
       createTask: "POST /api/tasks",

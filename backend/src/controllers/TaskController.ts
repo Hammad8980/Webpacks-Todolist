@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import Task from "../models/Tasks";
-import { TaskInput, TaskUpdate } from "../types";
+import { Tasks } from "../types";
 
 // Get all tasks
 export const getTasks = async (req: Request, res: Response) => {
   try {
-    const tasks = await Task.find().sort({ createdAt: -1 });
+    const tasks = await Task.find();
     res.json(tasks);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -15,7 +15,7 @@ export const getTasks = async (req: Request, res: Response) => {
 // Create task
 export const createTask = async (req: Request, res: Response) => {
   try {
-    const { title, isCompleted = false, priority = "p2" }: TaskInput = req.body;
+    const { title, isCompleted = false, priority = "p2" }: Tasks = req.body;
 
     const task = await Task.create({
       id: Date.now(),
@@ -34,7 +34,7 @@ export const createTask = async (req: Request, res: Response) => {
 export const updateTask = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const updateData: TaskUpdate = req.body;
+    const updateData: Tasks = req.body;
 
     const task = await Task.findOneAndUpdate({ id: parseInt(id) }, updateData, {
       new: true,

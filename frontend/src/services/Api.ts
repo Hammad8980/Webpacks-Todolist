@@ -12,11 +12,18 @@ const api = axios.create({
   },
 });
 
+// Helper function to strip MongoDB _id field from task objects
+function stripMongoId<T>(items: (T & { _id?: any })[]): T[] {
+  return items.map(({ _id, ...rest }) => rest as T);
+}
+
 // API service functions
 export const todoAPI = {
   // Get all tasks
   getTasks: async (): Promise<Task[]> => {
     const response = await api.get<Task[]>('/tasks');
+    const strippedTasks = stripMongoId<Task>(response.data);
+    console.log('Fetched tasks:', strippedTasks);
     return response.data;
   },
 
