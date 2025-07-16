@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+    './src/**/*.stories.{js,jsx,ts,tsx,mdx}', // Include Storybook stories
+    './.storybook/**/*.{js,jsx,ts,tsx}', // Include Storybook config files
+  ],
   theme: {
     extend: {
       colors: {
