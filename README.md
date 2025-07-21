@@ -6,7 +6,8 @@ A modern, responsive Todo List application built with **React + TypeScript** fro
 ![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-blue)
 ![Backend](https://img.shields.io/badge/Backend-Express%20%2B%20TypeScript-green)
 ![Database](https://img.shields.io/badge/Database-MongoDB-darkgreen)
-*For detailed tutorial of the project visit ![Webpack Todolist Documentation](https://code2tutorial.com/tutorial/f74a037e-f874-4c04-a180-fa218abede55/index.md)*
+
+- *For detailed tutorial of the project visit [Webpack Todolist Documentation](https://code2tutorial.com/tutorial/f74a037e-f874-4c04-a180-fa218abede55/index.md)*
 
 ## 🌟 Features
 
