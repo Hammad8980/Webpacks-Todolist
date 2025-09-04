@@ -5,7 +5,7 @@ import { Task } from '../features/todos/TodoTaskTypes';
 const api = axios.create({
   baseURL:
     process.env.NODE_ENV === 'production'
-      ? 'https://webpacks-todolist-production.up.railway.app/api'
+      ? 'https://webpacks-todolist-backend.vercel.app/api'
       : 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
