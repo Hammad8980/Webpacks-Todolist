@@ -23,6 +23,16 @@ app.use(express.json());
 // Setup Swagger Documentation
 setupSwagger(app);
 
+// Health check endpoint for Render.com
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || "development",
+  });
+});
+
 /**
  * @swagger
  * /:
@@ -60,9 +70,12 @@ app.use("/api", apiRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+// For local development
+if (process.env.NODE_ENV !== "production") {
+  const PORT = parseInt(process.env.PORT || "5000", 10);
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
+}
 
 export default app;
